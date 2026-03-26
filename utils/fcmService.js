@@ -152,7 +152,7 @@ export const sendFCMMessage = async (userId, notification) => {
             notification: {
                 title: String(notification.title || 'New Message'),
                 body: String(notification.body || ''),
-                ...(notificationImage ? { image: String(notificationImage), icon: String(notificationImage) } : {})
+                ...(notificationImage ? { image: String(notificationImage) } : {})
             },
             data: {
                 type: String(notification.type || ''),
