@@ -144,13 +144,15 @@ export const sendFCMMessage = async (userId, notification) => {
         ]);
 
         const projectLogo = project?.widgetConfig?.logoUrl;
-        const notificationImage = notification.image || projectLogo;
+        const baseUrl = process.env.BASE_URL || (process.env.chatte_url ? process.env.chatte_url.replace('exp://', 'http://') : 'http://localhost:5000');
+        const defaultLogo = `${baseUrl}/logo-bg.png`;
+        const notificationImage = notification.image || projectLogo || defaultLogo;
 
         const baseMessage = {
             notification: {
                 title: String(notification.title || 'New Message'),
                 body: String(notification.body || ''),
-                ...(notificationImage ? { image: String(notificationImage) } : {})
+                ...(notificationImage ? { image: String(notificationImage), icon: String(notificationImage) } : {})
             },
             data: {
                 type: String(notification.type || ''),
@@ -165,6 +167,7 @@ export const sendFCMMessage = async (userId, notification) => {
                     sound: 'default',
                     channelId: 'chattie-notifications',
                     color: '#ffffff',
+                    icon: 'logo_bg',
                     tag: notification.chatId ? String(notification.chatId) : 'chattie_general',
                     notification_count: Number(unreadCount), // Android Badge
                     ...(notificationImage ? { imageUrl: String(notificationImage) } : {})
