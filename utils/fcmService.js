@@ -152,7 +152,6 @@ export const sendFCMMessage = async (userId, notification) => {
             notification: {
                 title: String(notification.title || 'New Message'),
                 body: String(notification.body || ''),
-                ...(notificationImage ? { image: String(notificationImage) } : {})
             },
             data: {
                 type: String(notification.type || ''),
@@ -170,7 +169,6 @@ export const sendFCMMessage = async (userId, notification) => {
                     icon: 'logo_bg',
                     tag: notification.chatId ? String(notification.chatId) : 'chattie_general',
                     notification_count: Number(unreadCount), // Android Badge
-                    ...(notificationImage ? { imageUrl: String(notificationImage) } : {})
                 }
             },
             apns: {
@@ -182,9 +180,6 @@ export const sendFCMMessage = async (userId, notification) => {
                         'mutable-content': 1
                     }
                 },
-                fcm_options: {
-                    ...(notificationImage ? { image: String(notificationImage) } : {})
-                }
             }
         };
 
